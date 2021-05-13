@@ -1,11 +1,10 @@
-import React from 'react'
+import { useContext} from 'react'
 import styled from 'styled-components';
-import Header from 'components/Header'
-import Nav from 'components/Nav'
-
 import Container from 'components/Container';
 import AddForm from 'components/AddForm';
 import Chart from './Chart';
+import { useExpense } from 'hooks/useExpense';
+import { ExpenseContext } from 'context/expenseContext';
 
 
 const Wrapper = styled.div`
@@ -19,19 +18,22 @@ const MainSection = styled.div`
 
 
 const Revenues = () => {
-  const handleSubmit = (values) => {
-    // TODO: Handle Submit
+  const { addNewRevenue } = useContext(ExpenseContext);
+  const { revenuesDatasets } = useExpense();
+  const handleSubmit = ({category,amount}) => {
+    addNewRevenue(category, Number(amount));
+
   }
   return (
     <Wrapper>
-     <Container>
-      <MainSection>
-        <AddForm title='Revenue' handleSubmit={handleSubmit} />
-        <Chart />
-      </MainSection>
-     </Container>
+      <Container>
+        <MainSection>
+          <AddForm title='Revenue' handleSubmit={handleSubmit} />
+          <Chart dataset={revenuesDatasets} />
+        </MainSection>
+      </Container>
     </Wrapper>
-  )
+  );
 }
 
 export default Revenues
