@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import Input from './Input';
+import { Input } from 'components/Forms';
 const Wrapper = styled.div`
   position: relative;
   ${Input} {

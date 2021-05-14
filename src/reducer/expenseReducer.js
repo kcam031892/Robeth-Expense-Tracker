@@ -5,7 +5,7 @@ const reducer = (state, action) => {
     case ADD_NEW_EXPENSE:
       return { ...state, expenses: addNewExpense(state, payload) };
     case ADD_NEW_REVENUE:
-      return { ...state, expenses: addNewRevenue(state, payload) };
+      return { ...state, revenues: addNewRevenue(state, payload) };
     default:
       return state;
   }

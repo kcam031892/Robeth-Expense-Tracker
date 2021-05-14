@@ -1,6 +1,9 @@
 import AddForm from 'components/AddForm';
+import Chart from 'components/Chart';
 import Container from 'components/Container';
-import React from 'react'
+import { ExpenseContext } from 'context/expenseContext';
+import { useExpense } from 'hooks/useExpense';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 const Wrapper = styled.div``;
 const MainSection = styled.div`
@@ -9,18 +12,22 @@ const MainSection = styled.div`
   gap: 2rem;
 `;
 const Expenses = () => {
-  const handleSubmit = (values) => {
-
-  }
+  const { addNewExpense } = useContext(ExpenseContext);
+  const { expensesDataSet, expensesCategories } = useExpense();
+  const handleSubmit = ({category,amount}) => {
+    console.log(category,amount);
+    addNewExpense(category, Number(amount));
+  };
   return (
     <Wrapper>
       <Container>
         <MainSection>
-          <AddForm  handleSubmit={handleSubmit} title='Expense' />
+          <AddForm handleSubmit={handleSubmit} title='Expense' categories={expensesCategories} />
+          <Chart dataset={expensesDataSet} />
         </MainSection>
       </Container>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Expenses
+export default Expenses;

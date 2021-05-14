@@ -2,7 +2,7 @@ import { useContext} from 'react'
 import styled from 'styled-components';
 import Container from 'components/Container';
 import AddForm from 'components/AddForm';
-import Chart from './Chart';
+import Chart from 'components/Chart';
 import { useExpense } from 'hooks/useExpense';
 import { ExpenseContext } from 'context/expenseContext';
 
@@ -19,7 +19,7 @@ const MainSection = styled.div`
 
 const Revenues = () => {
   const { addNewRevenue } = useContext(ExpenseContext);
-  const { revenuesDatasets } = useExpense();
+  const { revenuesDatasets, revenuesCategories } = useExpense();
   const handleSubmit = ({category,amount}) => {
     addNewRevenue(category, Number(amount));
 
@@ -28,7 +28,7 @@ const Revenues = () => {
     <Wrapper>
       <Container>
         <MainSection>
-          <AddForm title='Revenue' handleSubmit={handleSubmit} />
+          <AddForm title='Revenue' handleSubmit={handleSubmit} categories={revenuesCategories} />
           <Chart dataset={revenuesDatasets} />
         </MainSection>
       </Container>
