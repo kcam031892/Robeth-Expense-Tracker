@@ -1,27 +1,32 @@
-import { useState, createContext, useReducer } from 'react';
-import { INITIAL_VALUES } from 'constants/expenseInitialValues';
-import expenseReducer from 'reducer/expenseReducer';
-import { ADD_NEW_REVENUE, ADD_NEW_EXPENSE } from 'constants/expenseActionTypes';
+import { createContext, useReducer, useContext } from 'react';
+import transactionReducer from 'reducer/transactionReducer';
+import { ADD_NEW_REVENUE, ADD_NEW_EXPENSE } from 'constants/ActionTypes';
+import ExpenseRepository from 'repository/ExpenseRepository';
+import RevenueRepository from 'repository/RevenueRepository';
 
 const initialValues = {
-  expenses: INITIAL_VALUES.expenses,
-  revenues: INITIAL_VALUES.revenues
+  expenses: [],
+  revenues: []
 };
 
 export const ExpenseContext = createContext(initialValues);
 
 export const ExpenseProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(expenseReducer, initialValues);
-  const addNewExpense = (category, amount) => {
-    return dispatch({
-      type: ADD_NEW_EXPENSE,
-      payload: { category, amount }
-    });
+  const [state, dispatch] = useReducer(transactionReducer, initialValues);
+  const addNewExpense = async (category, amount) => {
+      const insertedData = await ExpenseRepository.insert({ category, amount: Number(amount) });
+      return dispatch({
+        type: ADD_NEW_EXPENSE,
+        payload: { id: insertedData.id, category, amount }
+      });
+
+    
   };
-  const addNewRevenue = (category, amount) => {
+  const addNewRevenue = async (category, amount) => {
+    const insertedData = await RevenueRepository.insert({ category, amount: Number(amount) });
     return dispatch({
       type: ADD_NEW_REVENUE,
-      payload: { category, amount }
+      payload: { id:1, category, amount }
     });
   };
 
@@ -31,3 +36,5 @@ export const ExpenseProvider = ({ children }) => {
     </ExpenseContext.Provider>
   );
 };
+
+export const useExpensState = () => useContext(ExpenseContext);
