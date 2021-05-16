@@ -22,4 +22,4 @@ const Chart = ({dataset}) => {
   );
 };
 
-export default Chart;
+export default React.memo(Chart);

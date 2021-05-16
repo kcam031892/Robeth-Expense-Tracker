@@ -1,4 +1,4 @@
-import { ADD_NEW_REVENUE, ADD_NEW_EXPENSE } from 'constants/expenseActionTypes';
+import { ADD_NEW_REVENUE, ADD_NEW_EXPENSE } from 'constants/ActionTypes';
 const reducer = (state, action) => {
   const { payload } = action;
   switch (action.type) {
