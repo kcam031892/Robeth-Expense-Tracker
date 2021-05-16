@@ -8,5 +8,3 @@
 
 - Adding expenses and revenues.
 - Chart of list of expenses and revenues.
-- Data saved to firebase firestore.
-- Login Authentication with Gmail.
